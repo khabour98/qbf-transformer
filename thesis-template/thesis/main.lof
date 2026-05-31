@@ -1,0 +1,22 @@
+\babel@toc {english}{}\relax 
+\babel@toc {ngerman}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {ngerman}{}\relax 
+\babel@toc {english}{}\relax 
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Class diagram of the QBF Transformer tool.}}{14}{figure.caption.9}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Equivalence rate per transformation operator. The dashed green line marks the 100\% target. Bar labels show the equivalence rate and sample count~$n$. Operators with $n < 48$ were not applicable to all benchmark formulas (see text).}}{24}{figure.caption.13}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Runtime ratio (mutant / original) per operator for DepQBF. The dashed red line marks ratio~$= 1.0$.}}{25}{figure.caption.14}%
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Runtime ratio (mutant / original) per operator for CAQE. The dashed red line marks ratio~$= 1.0$.}}{26}{figure.caption.15}%
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Median runtime ratio comparison between DepQBF and CAQE per operator.}}{27}{figure.caption.16}%
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Line coverage delta ($\Delta $ line coverage in percentage points,~pp) per operator. Bars show the median; error bars show the interquartile range~(IQR). Positive values indicate the mutant activates additional source lines in DepQBF.}}{28}{figure.caption.17}%
+\contentsline {figure}{\numberline {5.6}{\ignorespaces Branch coverage delta ($\Delta $ branch coverage in percentage points,~pp) per operator. Bars show the median; error bars show the interquartile range~(IQR). Positive values indicate the mutant causes additional conditional branches to be taken in DepQBF.}}{29}{figure.caption.18}%
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Coverage delta (pp) vs.\ runtime ratio for DepQBF. The dashed red line marks ratio $= 1.0$.}}{30}{figure.caption.19}%
+\contentsline {figure}{\numberline {5.8}{\ignorespaces Coverage delta (pp) vs.\ runtime ratio for CAQE. The dashed red line marks ratio $= 1.0$.}}{31}{figure.caption.20}%
+\contentsline {figure}{\numberline {5.9}{\ignorespaces Coverage delta (pp) vs.\ runtime ratio for DepQBF, grouped by operator family. The dashed coloured line shows a linear fit with slope $m$; the dotted red line marks ratio $= 1.0$.}}{31}{figure.caption.21}%
+\addvspace {10\p@ }
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

@@ -1,0 +1,72 @@
+\chapter{Conclusion}\label{cha:conclusion}
+
+\section{Summary of Contributions}\label{sec:summary}
+
+This thesis investigated whether truth-value-preserving
+transformations can be used to systematically test QBF solvers by
+deliberately activating specific internal mechanisms while
+preserving the correct solver output as an oracle. To this end, the
+\emph{QBF Transformer} tool was designed and implemented as a
+complete experimental pipeline covering parsing, transformation,
+solving with DepQBF and CAQE, runtime measurement, and \texttt{gcov}
+coverage analysis.
+
+Four operators were formally defined and proven truth-value-preserving
+(see Chapter~\ref{cha:operators}): \emph{Tautology Insertion},
+\emph{Pure Literal Generator}, \emph{Universal Reduction Trigger},
+and \emph{Blocked Clause Insertion}. Each operator targets a
+distinct internal solver mechanism.
+
+The empirical evaluation over 285 valid experiments achieved a
+100\,\% equivalence rate, confirming that all four operators are
+correctly implemented in practice. The aggregated measurements
+(Table~\ref{tab:summary}) show that the operators produce
+measurable, operator-specific effects on both runtime and coverage,
+though the absolute magnitudes are small for the benchmark set
+used. A consistent asymmetry between the two solvers emerged:
+DepQBF shows runtime ratios at or below~$1.0$ across all operators,
+whereas CAQE shows ratios at or above~$1.0$ for most operators.
+This suggests solver-specific differences in preprocessing that
+warrant further investigation.
+
+\section{Limitations}\label{sec:limitations}
+
+\textbf{Benchmark size.} Only 50 formulas from seven QBFLIB
+families were evaluated. The small absolute coverage deltas
+(below~$0.10\,\text{pp}$) reflect the limited size of the
+benchmarks rather than the absence of an effect; larger and more
+diverse sets (e.g.\ the QBF Gallery) would be needed for
+statistically robust conclusions.
+
+\textbf{Coverage measurement limited to DepQBF.} \texttt{gcov} is
+not directly applicable to CAQE's Rust build, so the runtime
+asymmetry observed for CAQE cannot currently be explained at the
+code-path level.
+
+\textbf{Equivalence check via DepQBF only.} The equivalence flag
+relies on DepQBF's output; a systematic DepQBF bug would not be
+detected by this check alone.
+
+\textbf{Structural transformations only.} All four operators are
+syntactic. Semantic transformations exploiting dependency schemes
+or quantifier-alternation depth could potentially activate deeper
+solver code paths.
+
+
+\section{Future Work}\label{sec:future}
+
+Several directions follow naturally from this work.
+\emph{Larger benchmark sets} from QBFLIB or the QBF Gallery would
+enable statistically meaningful per-family comparisons.
+\emph{Additional operators} could target clause learning
+(Q-resolution), dependency scheme computation, or certificate
+generation. \emph{Mutation testing} of the solver source itself
+would quantify the sensitivity of the test method by checking
+whether injected bugs are detected by the equivalence flag.
+\emph{Automated operator synthesis} using constraint solving or
+program synthesis could discover new truth-value-preserving
+transformations beyond those designed by hand. Finally,
+\emph{cross-solver coverage} via Rust-native tooling
+(e.g.\ \texttt{cargo-llvm-cov}) would allow the DepQBF/CAQE runtime
+asymmetry to be investigated symmetrically --- arguably the most
+important open question left by this thesis.

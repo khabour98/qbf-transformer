@@ -1,0 +1,19 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} Run all formulas x all operators}
+python\PYG{+w}{ }main.py
+
+\PYG{c+c1}{\PYGZsh{} Run one specific formula}
+python\PYG{+w}{ }main.py\PYG{+w}{ }\PYGZhy{}\PYGZhy{}formula\PYG{+w}{ }benchmarks/formula\PYGZus{}001.qdimacs
+
+\PYG{c+c1}{\PYGZsh{} Run one specific operator only}
+python\PYG{+w}{ }main.py\PYG{+w}{ }\PYGZhy{}\PYGZhy{}operator\PYG{+w}{ }tautology\PYGZus{}insertion
+
+\PYG{c+c1}{\PYGZsh{} Adjust run count and timeout}
+python\PYG{+w}{ }main.py\PYG{+w}{ }\PYGZhy{}\PYGZhy{}runs\PYG{+w}{ }\PYG{l+m}{5}\PYG{+w}{ }\PYGZhy{}\PYGZhy{}timeout\PYG{+w}{ }\PYG{l+m}{30}
+
+\PYG{c+c1}{\PYGZsh{} Disable coverage measurement (faster)}
+python\PYG{+w}{ }main.py\PYG{+w}{ }\PYGZhy{}\PYGZhy{}no\PYGZhy{}coverage
+
+\PYG{c+c1}{\PYGZsh{} Generate summary from existing CSV (no new experiments)}
+python\PYG{+w}{ }main.py\PYG{+w}{ }\PYGZhy{}\PYGZhy{}plots\PYGZhy{}only
+\end{MintedVerbatim}

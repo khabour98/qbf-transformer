@@ -1,0 +1,7 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYGZsh{} DepQBF
+depqbf \PYGZhy{}\PYGZhy{}qdo \PYGZlt{}formula.qdimacs\PYGZgt{}
+
+\PYGZsh{} CAQE
+caqe \PYGZlt{}formula.qdimacs\PYGZgt{}
+\end{MintedVerbatim}

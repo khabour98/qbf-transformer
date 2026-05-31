@@ -1,0 +1,118 @@
+% !TeX encoding = UTF-8
+% !TeX root = MAIN.tex
+
+\ifeng%
+	\chapter*{Statutory Declaration}
+	I hereby declare that the thesis submitted is my own unaided work, that I
+	have not used other than the sources indicated, and that all direct and
+	indirect sources are acknowledged as references.
+
+	I acknowledge the use of Large Language Models (LLMs)
+	for the purposes 
+	of stylistic enhancement. 
+	I assume full responsibility for the content of submitted work, 
+	including checking for plagiarism and the veracity of 
+	all content.
+
+	%TODO change signature (svg or png, etc) to your own signature
+    \vspace{1cm}
+    \includegraphics[width=6.5cm]{signature.png}
+    
+	\place, \date
+
+\else 
+	\chapter*{Eidesstattliche Erklärung}
+	Ich erkläre an Eides statt, dass ich die vorliegende \ifcase\type Arbeit \or
+	Bachelorarbeit \or Masterarbeit \or Dissertation \or Diplomarbeit \fi
+	selbstständig und ohne fremde Hilfe verfasst, andere als die angegebenen
+	Quellen und Hilfsmittel nicht benutzt bzw. die wörtlich oder sinngemäß
+	entnommenen Stellen als solche kenntlich gemacht habe.
+
+	Die vorliegende \ifcase\type Arbeit \or Bachelorarbeit \or Masterarbeit \or
+	Dissertation \or Diplomarbeit \fi ist mit dem elektronisch übermittelten
+	Textdokument identisch.
+
+	\vskip1cm
+	\place, \date
+\fi
+
+%\chapter*{Acknowledgement}
+
+%TODO write your own Acknowledgement
+%Write your own acknowledgement in frontmatter.tex!
+
+\ifeng
+	\chapter*{Abstract}
+\else
+	\chapter*{Kurzfassung}
+\fi
+
+\vspace{-0.5cm}
+
+%% Hier Abstact in der Sprache eingeben, in der die Arbeit geschrieben wurde.
+%% Enter here the abstract in the main language.
+
+%TODO write your own abstract
+%Write your own abstract in frontmatter.tex!
+Quantified Boolean Formulas (QBF) extend propositional logic with
+existential and universal quantifiers, making the satisfiability
+problem PSPACE-complete. Specialized solvers such as DepQBF and
+CAQE are used in practice for formal verification, model checking,
+and AI planning. However, systematic testing of these solvers
+remains an open problem: arbitrary modifications to a QBF formula
+typically change its truth value, so the correct solver output
+after a modification is no longer known.
+
+This thesis addresses the problem through
+\emph{truth-value-preserving transformations}. Such a transformation
+produces a \emph{mutant} formula that is structurally different from
+the original but logically equivalent to it. Since both formulas
+must yield the same solver result by construction, any discrepancy
+is a definite solver error. Four operators are formally defined and
+proven to preserve the truth value: tautology insertion, pure
+literal generation, universal reduction triggering, and blocked
+clause insertion. Each operator is designed to activate a specific
+internal solver mechanism.
+
+The operators are implemented in a modular Python tool that parses
+QDIMACS files, applies transformations, invokes both solvers, and
+measures runtime and code coverage. An empirical evaluation on
+50 benchmark formulas from QBFLIB --- 285 valid experiments in
+total --- achieves a 100\,\% equivalence rate and reveals
+operator-specific differences in both runtime ratios and coverage
+deltas. A consistent asymmetry emerges between the two solvers,
+confirming that truth-value-preserving transformations are an
+effective and principled method for systematically exercising QBF
+solver internals.
+
+\vspace{-0.5cm}
+
+{
+	\let\clearpage\relax
+	\ifeng
+		\selectlanguage{ngerman} 
+%		\chapter*{Kurzfassung}
+	\else
+		\selectlanguage{english} 
+		\chapter*{Abstract}
+	\fi
+
+	%% Hier Abstact in der jeweils anderen Sprache eingeben.
+	%% Enter here the abtract in the other language.
+
+\vspace{-0.5cm}
+
+%TODO write your own abstract - second language
+%Write your own abstract in frontmatter.tex!
+	\ifeng
+		\selectlanguage{english}
+	\else
+		\selectlanguage{ngerman}
+	\fi
+}
+
+%%% Local Variables: 
+%%% TeX-master: "main"
+%%% TeX-engine: default
+%%% TeX-command-extra-options: "-shell-escape"
+%%% End: 

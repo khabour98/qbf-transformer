@@ -1,0 +1,8 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+c Example formula
+p cnf 3 2
+a 1 0
+e 2 3 0
+1 2 0
+\PYGZhy{}2 3 0
+\end{MintedVerbatim}

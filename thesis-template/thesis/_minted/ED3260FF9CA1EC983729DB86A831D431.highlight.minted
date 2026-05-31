@@ -1,0 +1,16 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYGZpc{} Original (3 variables, 2 clauses)
+p cnf 3 2
+a 1 0
+e 2 3 0
+1 \PYGZhy{}2 0
+\PYGZhy{}2 3 0
+
+\PYGZpc{} Mutant: one tautology clause added for variable 2
+p cnf 3 3
+a 1 0
+e 2 3 0
+1 \PYGZhy{}2 0
+\PYGZhy{}2 3 0
+2 \PYGZhy{}2 0
+\end{MintedVerbatim}

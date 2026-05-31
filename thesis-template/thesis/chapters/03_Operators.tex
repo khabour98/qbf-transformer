@@ -1,0 +1,171 @@
+\chapter{Transformation Operators}\label{cha:operators}
+
+This chapter describes the four truth-value-preserving transformation operators implemented in the QBF Transformer tool. For each operator we give a formal definition, a proof of truth-value preservation, and a description of the expected effect on solver behavior.
+
+All operators follow the same contract: given an input formula $\varphi$, the operator produces a \emph{mutant} $\varphi'$ such that $\varphi$ is true if and only if $\varphi'$ is true. The original formula object is never modified; the operator always works on a deep copy.
+
+\section{Tautology Insertion}\label{sec:tautology}
+
+\subsection{Definition}
+
+Let $\varphi$ be a QBF formula and let $x$ be an existentially quantified variable in $\varphi$. The \emph{tautology insertion} operator produces the mutant
+\[
+  \varphi' = \varphi \land (x \lor \lnot x).
+\]
+The clause $(x \lor \lnot x)$ is called a \emph{tautology clause} because it evaluates to true under every possible assignment to $x$.
+
+\subsection{Proof of Truth-Value Preservation}
+
+\begin{proof}
+Let $\varphi$ be any QBF formula and $x$ any Boolean variable.
+The clause $(x \lor \lnot x)$ is a tautology, i.e.\ it is true for every assignment to $x$.
+Therefore:
+\[
+  \varphi \land (x \lor \lnot x) \;\equiv\; \varphi \land \top \;\equiv\; \varphi.
+\]
+The truth value of $\varphi'$ is identical to that of $\varphi$ under every quantifier assignment.
+\end{proof}
+
+\subsection{Expected Effect on Solver}
+
+The tautology clause adds one syntactic clause to the formula without adding any logical constraint. 
+Both DepQBF and CAQE must parse and process the additional clause during preprocessing. 
+Because the clause contains a complementary literal pair $(x, \lnot x)$, a solver that performs tautology detection during clause simplification will immediately recognize and discard it. 
+The expected runtime overhead is therefore small (ratio close to $1.0$ and slightly below), and the coverage delta is expected to be low, as no fundamentally new solver code paths are activated.
+
+\begin{listing}[H]
+\caption{Tautology insertion example.}
+\label{lst:tautology}
+\begin{minted}[frame=single,fontsize=\small,breaklines]{text}
+% Original (3 variables, 2 clauses)
+p cnf 3 2
+a 1 0
+e 2 3 0
+1 -2 0
+-2 3 0
+
+% Mutant: one tautology clause added for variable 2
+p cnf 3 3
+a 1 0
+e 2 3 0
+1 -2 0
+-2 3 0
+2 -2 0
+\end{minted}
+\end{listing}
+
+\section{Pure Literal Generator}\label{sec:pureliteral}
+
+\subsection{Definition}
+
+A variable $x$ is a \emph{pure literal} in a formula $\varphi$ if it appears in $\varphi$ with only one polarity: either exclusively as $x$ (positive pure literal) or exclusively as $\lnot x$ (negative pure literal), but never both.
+
+The \emph{pure literal generator} operator identifies an existentially quantified variable $x$ that is already a pure literal in $\varphi$ and applies \emph{Pure Literal Elimination} (PLE) to produce the mutant $\varphi'$:
+
+\begin{itemize}
+  \item If $x$ is a positive pure literal: set $x = \top$. Remove all clauses containing $x$ (they are satisfied). Remove the variable $x$ from the quantifier prefix.
+  \item If $x$ is a negative pure literal: set $x = \bot$. Remove all clauses containing $\lnot x$ (they are satisfied). Remove $x$ from the prefix.
+\end{itemize}
+
+\subsection{Proof of Truth-Value Preservation}
+
+\begin{proof}
+Let $x$ be an existentially quantified positive pure literal in $\varphi$, i.e.\ $\lnot x$ does not appear in any clause of $\varphi$.
+Because $\lnot x$ is absent, assigning $x = \top$ satisfies every clause containing $x$ and leaves all other clauses unchanged. No clause is falsified by this assignment. The existential player can always choose $x = \top$, so the truth value of $\varphi$ is not affected by the elimination.
+The argument for a negative pure literal is symmetric.
+\end{proof}
+
+\textbf{Remark.} The operator only applies PLE to variables that are \emph{already} pure literals in the original formula. Artificially making a variable pure by removing occurrences of one polarity would not be truth-value-preserving in general.
+
+\subsection{Expected Effect on Solver}
+
+Pure literal elimination removes clauses from the formula, making the 
+mutant strictly smaller than the original. The solver is expected to 
+solve the mutant faster (runtime ratio $< 1.0$). Because the mutant 
+is smaller, the solver traverses fewer code paths overall, resulting 
+in a negative coverage delta relative to the original run.
+
+\section{Universal Reduction Trigger}\label{sec:ur}
+
+\subsection{Definition}
+\emph{Universal Reduction} (UR) is a simplification rule specific to QBF~\cite{KleineBuening1995}: a universal literal $u$ may be removed from a clause $C$ if no existential variable in $C$ lies at a deeper quantifier level than $u$'s block. Formally, let $\mathrm{level}(v)$ denote the index of the quantifier block containing variable $v$ in the prefix, with level $0$ corresponding to the outermost block. Then $u$ is removable from $C$ if:
+\[
+  \forall e \in C,\; e \text{ existential} \;\Rightarrow\; \mathrm{level}(e) < \mathrm{level}(u).
+\]
+
+The \emph{universal reduction trigger} operator inserts the clause
+\[
+  C_{\mathrm{UR}} = [u,\; e,\; \lnot e]
+\]
+where $u$ is a universal variable and $e$ is an existential variable with $\mathrm{level}(u) < \mathrm{level}(e)$, i.e.\ $u$ lies at an outer level than $e$. This level configuration is chosen so that the solver, when inspecting the clause, has to consult the same quantifier-level and clause-simplification machinery that universal reduction relies on, even though the clause is ultimately discarded as a tautology.
+
+\subsection{Proof of Truth-Value Preservation}
+
+\begin{proof}
+The clause $[u, e, \lnot e]$ is a tautology for every assignment to $e$:
+\[
+  [u, e, \lnot e] =
+  \begin{cases}
+    [u, \top, \bot] = \top & \text{if } e = \top,\\
+    [u, \bot, \top] = \top & \text{if } e = \bot.
+  \end{cases}
+\]
+The clause evaluates to true regardless of the value of $u$ or $e$. Adding a tautological clause to any formula preserves its truth value:
+\[
+  \varphi \;\equiv\; \varphi \land \top \;\equiv\; \varphi \land [u, e, \lnot e].
+\]
+\end{proof}
+
+\textbf{Remark on a prior incorrect design.} An earlier version of this operator inserted the clause $[u, e]$ instead of $[u, e, \lnot e]$. This is \emph{not} truth-value-preserving: if the universal player assigns $u = \bot$, the clause becomes a unit clause $[e]$, which may force $e = \top$ and create a conflict with existing clauses, potentially turning a satisfiable formula into an unsatisfiable one. The tautological form $[u, e, \lnot e]$ avoids this issue entirely.
+
+\subsection{Expected Effect on Solver}
+
+When the solver encounters $C_{\mathrm{UR}}$, it must inspect the quantifier levels of $u$ and $e$ during its standard simplification phase: the clause contains a universal literal whose level is outer to that of the existential pair $e, \lnot e$. Even though the clause is ultimately discarded as a tautology (because of the pair $[e, \lnot e]$), the solver traverses the same level-checking and clause-simplification code that is also used during universal reduction. The runtime overhead is therefore expected to be small, while the coverage delta should be slightly positive --- reflecting that some preprocessing code paths are reached that the original formula does not exercise.
+
+\section{Blocked Clause Insertion}\label{sec:blocked}
+
+\subsection{Definition}
+
+Let $C$ be a clause and $l \in C$ a literal. $C$ is \emph{blocked} with respect to $l$ if, for every clause $D$ in the formula that contains $\lnot l$, the resolvent $C \otimes_l D = (C \setminus \{l\}) \cup (D \setminus \{\lnot l\})$ is a tautology~\cite{BiereEtAl2011}.
+
+The \emph{blocked clause insertion} operator constructs such a clause $C$ and adds it to $\varphi$. The simplest construction arises when no clause in $\varphi$ contains $\lnot l$: in this case the condition holds vacuously for every clause, and the single-literal clause $[l]$ is trivially blocked. More generally, the operator selects an existential literal $l$ and builds $C$ by appending literals that ensure every resolvent with a $\lnot l$-clause is a tautology.
+\subsection{Proof of Truth-Value Preservation}
+
+\begin{proof}
+This follows directly from the Blocked Clause Addition (BCA) theorem~\cite{Jarvisalo2010,BiereEtAl2011}: if $C$ is blocked with respect to some literal $l \in C$, then
+\[
+  \varphi \;\equiv\; \varphi \land C.
+\]
+Intuitively, a blocked clause can always be satisfied by setting $l = \top$ without falsifying any other clause, because every clause $D$ containing $\lnot l$ already contains a tautological resolvent pair with $C$. The truth value of $\varphi$ is therefore unchanged. 
+\end{proof}
+
+\subsection{Expected Effect on Solver}
+
+Both DepQBF and CAQE implement blocked clause detection as part of their preprocessing phase. Inserting a blocked clause forces the solver to execute the BCE/BCA detection code paths, which increases coverage for the corresponding solver modules. The runtime effect depends on the size of the formula and the cost of BCE detection; in general, the ratio is expected to be close to $1.0$ with a moderate positive coverage delta.
+
+\section{Summary}\label{sec:operator-summary}
+
+Table~\ref{tab:operators} summarises the four operators, their structural change to the formula, the basis of truth-value preservation, and the primary solver mechanism each is designed to activate.
+
+\begin{table}[h]
+\centering
+\caption{Overview of the four transformation operators.}
+\label{tab:operators}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llll}
+\hline
+\textbf{Operator} & \textbf{Structural change} & \textbf{Preservation basis} & \textbf{Target mechanism} \\
+\hline
+Tautology Insertion         & Adds clause $[x, \lnot x]$         & Tautology ($\equiv \top$) & Tautology detection       \\
+Pure Literal Generator      & Removes clauses, shrinks prefix     & PLE soundness             & Pure Literal Elimination  \\
+Universal Reduction Trigger & Adds clause $[u, e, \lnot e]$      & Tautology ($\equiv \top$) & Universal Reduction       \\
+Blocked Clause Insertion    & Adds blocked clause $C$             & BCA theorem               & Blocked Clause Elimination\\
+\hline
+\end{tabular}}
+\end{table}
+
+%%% Local Variables:
+%%% tex-command: "pdflatex"
+%%% TeX-master: "../main"
+%%% TeX-command-extra-options: "-shell-escape"
+%%% End:

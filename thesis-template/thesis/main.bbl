@@ -1,0 +1,340 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{LonsingBiere2010}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=5f05df91d4fbc253be5e13d2b97fea57}{%
+           family={Lonsing},
+           familyi={L\bibinitperiod},
+           given={Florian},
+           giveni={F\bibinitperiod}}}%
+        {{hash=22081d00e30965a89f413e528510617e}{%
+           family={Biere},
+           familyi={B\bibinitperiod},
+           given={Armin},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{27aee9b7f6aba93fd998b31c22f1660d}
+      \strng{fullhash}{27aee9b7f6aba93fd998b31c22f1660d}
+      \strng{fullhashraw}{27aee9b7f6aba93fd998b31c22f1660d}
+      \strng{bibnamehash}{27aee9b7f6aba93fd998b31c22f1660d}
+      \strng{authorbibnamehash}{27aee9b7f6aba93fd998b31c22f1660d}
+      \strng{authornamehash}{27aee9b7f6aba93fd998b31c22f1660d}
+      \strng{authorfullhash}{27aee9b7f6aba93fd998b31c22f1660d}
+      \strng{authorfullhashraw}{27aee9b7f6aba93fd998b31c22f1660d}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal on Satisfiability, Boolean Modelling and Computation}
+      \field{title}{{DepQBF}: A Dependency-Aware {QBF} Solver}
+      \field{volume}{7}
+      \field{year}{2010}
+    \endentry
+    \entry{RabeTentrup2015}{inproceedings}{}{}
+      \name{author}{2}{}{%
+        {{hash=4f7a4440e1d5c579080d611470f87b6f}{%
+           family={Rabe},
+           familyi={R\bibinitperiod},
+           given={Markus\bibnamedelima N.},
+           giveni={M\bibinitperiod\bibinitdelim N\bibinitperiod}}}%
+        {{hash=650fc8a0a617b3e6b689f0546fbab7e1}{%
+           family={Tentrup},
+           familyi={T\bibinitperiod},
+           given={Leander},
+           giveni={L\bibinitperiod}}}%
+      }
+      \strng{namehash}{c5020970501dfc16427ef621162edcac}
+      \strng{fullhash}{c5020970501dfc16427ef621162edcac}
+      \strng{fullhashraw}{c5020970501dfc16427ef621162edcac}
+      \strng{bibnamehash}{c5020970501dfc16427ef621162edcac}
+      \strng{authorbibnamehash}{c5020970501dfc16427ef621162edcac}
+      \strng{authornamehash}{c5020970501dfc16427ef621162edcac}
+      \strng{authorfullhash}{c5020970501dfc16427ef621162edcac}
+      \strng{authorfullhashraw}{c5020970501dfc16427ef621162edcac}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of FMCAD}
+      \field{title}{{CAQE}: A Certifying {QBF} Solver}
+      \field{year}{2015}
+    \endentry
+    \entry{ChenEtAl2018}{article}{}{}
+      \name{author}{7}{}{%
+        {{hash=3d4dd39c7d8ff23b7884c3f0c555a5a6}{%
+           family={Chen},
+           familyi={C\bibinitperiod},
+           given={Tsong\bibnamedelima Yueh},
+           giveni={T\bibinitperiod\bibinitdelim Y\bibinitperiod}}}%
+        {{hash=e38c4b242c22a7f7d45f0e431ee532f5}{%
+           family={Kuo},
+           familyi={K\bibinitperiod},
+           given={Fei-Ching},
+           giveni={F\bibinithyphendelim C\bibinitperiod}}}%
+        {{hash=13cd3e3ad630d84d1ef7166108cdcfd1}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Wenjuan},
+           giveni={W\bibinitperiod}}}%
+        {{hash=d2a8f4657acbd75c423bd0ecc9f73c97}{%
+           family={Poon},
+           familyi={P\bibinitperiod},
+           given={Pak-Lok},
+           giveni={P\bibinithyphendelim L\bibinitperiod}}}%
+        {{hash=5c7f2fe42ec3dd2ac32890f0b7acc427}{%
+           family={Towey},
+           familyi={T\bibinitperiod},
+           given={Dave},
+           giveni={D\bibinitperiod}}}%
+        {{hash=66a46b0cd2b6ecc03294d99cd95da7ec}{%
+           family={Tse},
+           familyi={T\bibinitperiod},
+           given={T.\bibnamedelimi H.},
+           giveni={T\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+        {{hash=4087241ebcbce2c01ee1cbba33b444d8}{%
+           family={Zhou},
+           familyi={Z\bibinitperiod},
+           given={Zhi\bibnamedelima Quan},
+           giveni={Z\bibinitperiod\bibinitdelim Q\bibinitperiod}}}%
+      }
+      \strng{namehash}{bcd889cfea11677a730ac86c829e5828}
+      \strng{fullhash}{a02deef26614456085b1073ecfc1b61a}
+      \strng{fullhashraw}{a02deef26614456085b1073ecfc1b61a}
+      \strng{bibnamehash}{bcd889cfea11677a730ac86c829e5828}
+      \strng{authorbibnamehash}{bcd889cfea11677a730ac86c829e5828}
+      \strng{authornamehash}{bcd889cfea11677a730ac86c829e5828}
+      \strng{authorfullhash}{a02deef26614456085b1073ecfc1b61a}
+      \strng{authorfullhashraw}{a02deef26614456085b1073ecfc1b61a}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{ACM Computing Surveys}
+      \field{number}{1}
+      \field{title}{Metamorphic Testing: A Review of Challenges and Opportunities}
+      \field{volume}{51}
+      \field{year}{2018}
+      \field{pages}{4:1\bibrangedash 4:27}
+      \range{pages}{-1}
+    \endentry
+    \entry{Cook1971}{inproceedings}{}{}
+      \name{author}{1}{}{%
+        {{hash=609a39905dc0e988c3b294dceecdb1e4}{%
+           family={Cook},
+           familyi={C\bibinitperiod},
+           given={Stephen\bibnamedelima A.},
+           giveni={S\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+      }
+      \strng{namehash}{609a39905dc0e988c3b294dceecdb1e4}
+      \strng{fullhash}{609a39905dc0e988c3b294dceecdb1e4}
+      \strng{fullhashraw}{609a39905dc0e988c3b294dceecdb1e4}
+      \strng{bibnamehash}{609a39905dc0e988c3b294dceecdb1e4}
+      \strng{authorbibnamehash}{609a39905dc0e988c3b294dceecdb1e4}
+      \strng{authornamehash}{609a39905dc0e988c3b294dceecdb1e4}
+      \strng{authorfullhash}{609a39905dc0e988c3b294dceecdb1e4}
+      \strng{authorfullhashraw}{609a39905dc0e988c3b294dceecdb1e4}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 3rd Annual ACM Symposium on Theory of Computing (STOC)}
+      \field{title}{The Complexity of Theorem Proving Procedures}
+      \field{year}{1971}
+      \field{pages}{151\bibrangedash 158}
+      \range{pages}{8}
+    \endentry
+    \entry{Stockmeyer1973}{inproceedings}{}{}
+      \name{author}{2}{}{%
+        {{hash=1cd63188c51dd0ee992e8893a23862b9}{%
+           family={Stockmeyer},
+           familyi={S\bibinitperiod},
+           given={Larry\bibnamedelima J.},
+           giveni={L\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+        {{hash=1cab43312faf7ffbcde3ae18c5834d1e}{%
+           family={Meyer},
+           familyi={M\bibinitperiod},
+           given={Albert\bibnamedelima R.},
+           giveni={A\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+      }
+      \strng{namehash}{7b0616f3da96ec8e7c44c006c6534d95}
+      \strng{fullhash}{7b0616f3da96ec8e7c44c006c6534d95}
+      \strng{fullhashraw}{7b0616f3da96ec8e7c44c006c6534d95}
+      \strng{bibnamehash}{7b0616f3da96ec8e7c44c006c6534d95}
+      \strng{authorbibnamehash}{7b0616f3da96ec8e7c44c006c6534d95}
+      \strng{authornamehash}{7b0616f3da96ec8e7c44c006c6534d95}
+      \strng{authorfullhash}{7b0616f3da96ec8e7c44c006c6534d95}
+      \strng{authorfullhashraw}{7b0616f3da96ec8e7c44c006c6534d95}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of STOC}
+      \field{title}{Word Problems Requiring Exponential Time}
+      \field{year}{1973}
+      \field{pages}{1\bibrangedash 9}
+      \range{pages}{9}
+    \endentry
+    \entry{KleineBuening1995}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=5e63820ceeee8767143d5e7c06861c85}{%
+           family={Kleine\bibnamedelima Büning},
+           familyi={K\bibinitperiod\bibinitdelim B\bibinitperiod},
+           given={Hans},
+           giveni={H\bibinitperiod}}}%
+        {{hash=5482fd910692daec95489dd87da34892}{%
+           family={Karpinski},
+           familyi={K\bibinitperiod},
+           given={Marek},
+           giveni={M\bibinitperiod}}}%
+        {{hash=acfffebb62514f6cc37808977faeaddd}{%
+           family={Flögel},
+           familyi={F\bibinitperiod},
+           given={Andreas},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{df1a1098c5ae7b297af29db6fc4d0461}
+      \strng{fullhash}{df1a1098c5ae7b297af29db6fc4d0461}
+      \strng{fullhashraw}{df1a1098c5ae7b297af29db6fc4d0461}
+      \strng{bibnamehash}{df1a1098c5ae7b297af29db6fc4d0461}
+      \strng{authorbibnamehash}{df1a1098c5ae7b297af29db6fc4d0461}
+      \strng{authornamehash}{df1a1098c5ae7b297af29db6fc4d0461}
+      \strng{authorfullhash}{df1a1098c5ae7b297af29db6fc4d0461}
+      \strng{authorfullhashraw}{df1a1098c5ae7b297af29db6fc4d0461}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Information and Computation}
+      \field{number}{1}
+      \field{title}{Resolution for Quantified Boolean Formulas}
+      \field{volume}{117}
+      \field{year}{1995}
+      \field{pages}{12\bibrangedash 18}
+      \range{pages}{7}
+    \endentry
+    \entry{BiereEtAl2011}{inproceedings}{}{}
+      \name{author}{3}{}{%
+        {{hash=22081d00e30965a89f413e528510617e}{%
+           family={Biere},
+           familyi={B\bibinitperiod},
+           given={Armin},
+           giveni={A\bibinitperiod}}}%
+        {{hash=5f05df91d4fbc253be5e13d2b97fea57}{%
+           family={Lonsing},
+           familyi={L\bibinitperiod},
+           given={Florian},
+           giveni={F\bibinitperiod}}}%
+        {{hash=ae94d3623837a29df0fe92c4375ab4de}{%
+           family={Seidl},
+           familyi={S\bibinitperiod},
+           given={Maximilian},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{0ba98cf4108d2e4a624e0ea8c5158f39}
+      \strng{fullhash}{0ba98cf4108d2e4a624e0ea8c5158f39}
+      \strng{fullhashraw}{0ba98cf4108d2e4a624e0ea8c5158f39}
+      \strng{bibnamehash}{0ba98cf4108d2e4a624e0ea8c5158f39}
+      \strng{authorbibnamehash}{0ba98cf4108d2e4a624e0ea8c5158f39}
+      \strng{authornamehash}{0ba98cf4108d2e4a624e0ea8c5158f39}
+      \strng{authorfullhash}{0ba98cf4108d2e4a624e0ea8c5158f39}
+      \strng{authorfullhashraw}{0ba98cf4108d2e4a624e0ea8c5158f39}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of CADE-23}
+      \field{series}{LNCS}
+      \field{title}{Blocked Clause Elimination for {QBF}}
+      \field{volume}{6803}
+      \field{year}{2011}
+      \field{pages}{101\bibrangedash 115}
+      \range{pages}{15}
+    \endentry
+    \entry{QDIMACS}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=b2edbd4eca2f047e6e6b6e7f29002469}{%
+           family={{QBFLIB}},
+           familyi={Q\bibinitperiod}}}%
+      }
+      \strng{namehash}{b2edbd4eca2f047e6e6b6e7f29002469}
+      \strng{fullhash}{b2edbd4eca2f047e6e6b6e7f29002469}
+      \strng{fullhashraw}{b2edbd4eca2f047e6e6b6e7f29002469}
+      \strng{bibnamehash}{b2edbd4eca2f047e6e6b6e7f29002469}
+      \strng{authorbibnamehash}{b2edbd4eca2f047e6e6b6e7f29002469}
+      \strng{authornamehash}{b2edbd4eca2f047e6e6b6e7f29002469}
+      \strng{authorfullhash}{b2edbd4eca2f047e6e6b6e7f29002469}
+      \strng{authorfullhashraw}{b2edbd4eca2f047e6e6b6e7f29002469}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{{QDIMACS} Standard Version 1.1}
+      \field{year}{2005}
+      \verb{urlraw}
+      \verb https://www.qbflib.org/qdimacs.html
+      \endverb
+      \verb{url}
+      \verb https://www.qbflib.org/qdimacs.html
+      \endverb
+    \endentry
+    \entry{Jarvisalo2010}{inproceedings}{}{}
+      \name{author}{3}{}{%
+        {{hash=69144522e80cc3f0d70e7014afbfc072}{%
+           family={Järvisalo},
+           familyi={J\bibinitperiod},
+           given={Matti},
+           giveni={M\bibinitperiod}}}%
+        {{hash=22081d00e30965a89f413e528510617e}{%
+           family={Biere},
+           familyi={B\bibinitperiod},
+           given={Armin},
+           giveni={A\bibinitperiod}}}%
+        {{hash=adbf24c301850e2a04b396044f205f4d}{%
+           family={Heule},
+           familyi={H\bibinitperiod},
+           given={Marijn},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{52019f50e0f0a3a960dc126d5aad4c2b}
+      \strng{fullhash}{52019f50e0f0a3a960dc126d5aad4c2b}
+      \strng{fullhashraw}{52019f50e0f0a3a960dc126d5aad4c2b}
+      \strng{bibnamehash}{52019f50e0f0a3a960dc126d5aad4c2b}
+      \strng{authorbibnamehash}{52019f50e0f0a3a960dc126d5aad4c2b}
+      \strng{authornamehash}{52019f50e0f0a3a960dc126d5aad4c2b}
+      \strng{authorfullhash}{52019f50e0f0a3a960dc126d5aad4c2b}
+      \strng{authorfullhashraw}{52019f50e0f0a3a960dc126d5aad4c2b}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of TACAS}
+      \field{series}{LNCS}
+      \field{title}{Blocked Clause Elimination}
+      \field{volume}{6015}
+      \field{year}{2010}
+      \field{pages}{129\bibrangedash 144}
+      \range{pages}{16}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

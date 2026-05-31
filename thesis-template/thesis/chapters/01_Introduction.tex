@@ -1,0 +1,30 @@
+\chapter{Introduction}\label{cha:introduction}
+
+\section{Problem Statement}\label{sec:problem}
+
+Quantified Boolean Formulas (QBF) are a powerful extension of classical propositional logic. Unlike ordinary Boolean formulas, QBF allows the use of existential and universal quantifiers over Boolean variables. This expressiveness enables complex decision problems from formal verification, model checking, and AI planning to be represented precisely and compactly. The decision problem for QBF --- is a given quantified formula true or false? --- is PSPACE-complete and therefore strictly more expressive than the NP-complete SAT problem.
+
+Specialized tools called QBF solvers exist to solve QBF instances. Prominent examples are DepQBF~\cite{LonsingBiere2010} and CAQE~\cite{RabeTentrup2015}, which are based on different algorithmic foundations. Despite their practical importance, the systematic testing of these solvers remains an open problem: unlike classical SAT solvers, there are no established methods to deliberately activate specific internal code paths of a QBF solver and measure their correctness and efficiency.
+
+The fundamental challenge lies in the nature of testing itself: if a QBF formula is modified arbitrarily, its truth value typically changes as well --- meaning it is no longer known whether the solver returns the correct result. What is needed is a method that deliberately alters the formula's structure while guaranteeing that the correct solver result remains known.
+
+\section{Approach: Truth-Value-Preserving Transformations}\label{sec:approach}
+
+This thesis addresses the problem described above through the use of truth-value-preserving transformations. Such a transformation modifies a QBF formula structurally --- for example by adding a clause, generating a pure literal, or inserting a blocked clause --- while formally preserving the truth value of the formula. The result is a so-called \emph{mutant}: a new formula instance that has the same truth value as the original, but causes the solver to follow a different internal computation path.
+
+This approach is inspired by the concept of metamorphic testing ~\cite{ChenEtAl2018}: instead of directly verifying correct output behavior --- which would be difficult for QBF without a known solution --- relations between inputs are exploited. Since the original and the mutant must share the same truth value, any divergence in the solver's result can be identified as a fault. At the same time, the structural differences between original and mutant make it possible to deliberately activate specific internal solver mechanisms and measure their effect on runtime and code coverage.
+
+Four transformation operators form the core of this approach, each targeting a different internal QBF mechanism: tautology insertion, pure literal generation, universal reduction triggering, and blocked clause insertion. Each operator is formally proven to be truth-value-preserving and is specifically constructed to activate a particular internal solver code path.
+
+\section{Goals and Contributions}\label{sec:goals}
+
+The central goal of this bachelor's thesis is the development of a Python tool that automatically transforms QBF formulas in QDIMACS format, solves the transformed formulas using DepQBF and CAQE, and systematically measures runtime and code coverage. On this basis, the thesis investigates how structural properties of a QBF formula affect the behavior of both solvers.
+
+The concrete contributions of this thesis are:
+
+\begin{itemize}
+    \item The formal description and justification of four truth-value-preserving transformation operators for QBF.
+    \item The implementation of a modularly structured Python tool (\emph{QBF Transformer}) that integrates a parser, operators, solver integration, and analysis in a single pipeline.
+    \item An empirical evaluation over benchmark formulas that reports runtime ratios and code coverage deltas for each operator and both solvers.
+    \item A comparative analysis between DepQBF and CAQE showing which transformation effects are solver-independent and which are solver-specific.
+\end{itemize}

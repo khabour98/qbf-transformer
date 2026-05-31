@@ -1,0 +1,116 @@
+\chapter{Background}\label{cha:background}
+
+\section{Quantified Boolean Formulas}\label{sec:qbf}
+
+A \emph{Quantified Boolean Formula} (QBF) is an extension of propositional logic in which Boolean variables may be bound by quantifiers. Formally, a QBF in \emph{prenex normal form} consists of two parts: a \emph{quantifier prefix} and a \emph{matrix}.
+
+The quantifier prefix is a sequence of quantifier blocks of the form
+\[
+  Q_1\, X_1\; Q_2\, X_2\; \cdots\; Q_k\, X_k
+\]
+where each $Q_i \in \{\exists, \forall\}$ is either an existential or a universal quantifier, and each $X_i$ is a non-empty, pairwise disjoint set of Boolean variables. The matrix $\varphi$ is a propositional formula over all variables $X_1 \cup \cdots \cup X_k$, typically given in conjunctive normal form (CNF) as a conjunction of clauses.
+
+The truth value of a QBF is defined recursively: an existentially quantified variable $x \in X_i$ is \emph{true} if there exists an assignment to $x$ that makes the remaining formula true; a universally quantified variable $u \in X_i$ must satisfy the formula \emph{for all} assignments to $u$.
+
+\begin{example}
+  The formula $\forall x_1\; \exists x_2\, x_3\; \forall x_4 \colon (x_1 \lor x_2) \land (\lnot x_2 \lor x_3 \lor x_4)$ has a universal prefix block $\{x_1, x_4\}$ and an existential block $\{x_2, x_3\}$. The formula is true if the existential player can satisfy the matrix for every assignment to $x_1$ and $x_4$.
+\end{example}
+
+\subsection{Relationship to SAT}\label{subsec:qbf-vs-sat}
+
+The Boolean Satisfiability problem (SAT) asks whether a propositional formula has at least one satisfying assignment. SAT is NP-complete~\cite{Cook1971}. QBF strictly generalises SAT: a propositional formula $\varphi$ is equivalent to the QBF $\exists X\colon \varphi$, where $X$ is the set of all variables. The decision problem for QBF is PSPACE-complete~\cite{Stockmeyer1973}, meaning it is believed to be strictly harder than NP. This additional expressiveness makes QBF a natural fit for problems that require reasoning about all possible environments, such as reactive synthesis, model checking, and adversarial planning.
+
+\subsection{Internal Solver Mechanisms}\label{subsec:mechanisms}
+
+Modern QBF solvers exploit several structural properties of the input formula to prune the search space. Four mechanisms are particularly relevant to this thesis, as the transformation operators defined in Chapter~\ref{cha:operators} are specifically designed to activate them:
+
+\begin{description}
+  \item[Unit Literal.] A clause containing exactly one literal is called a \emph{unit clause}. Unit propagation assigns the literal's variable to the unique satisfying value and removes the clause from the formula, simplifying the search.
+
+  \item[Pure Literal.] A variable is called a \emph{pure literal} if it appears in the formula with only one polarity (only positive or only negative). In propositional SAT, a pure literal can be assigned to satisfy all clauses in which it appears and those clauses can be removed. In QBF, the rule applies dually: existential pure literals are assigned to satisfy the clauses containing them, while universal pure literals are assigned to the opposite value~\cite{LonsingBiere2010}.
+  
+  \item[Universal Reduction.] A universal variable $u$ can be removed from a clause $C$ if no existential variable that appears in $C$ is in a quantifier block to the right of $u$'s block. This operation, known as \emph{universal reduction} (UR), is a sound simplification rule specific to QBF~\cite{KleineBuening1995}.
+
+  \item[Blocked Clause.] A clause $C$ is \emph{blocked} with respect to a literal $l \in C$ if, for every clause $C'$ containing $\lnot l$, the resolvent $C \otimes_{l} C'$ is a tautology. Blocked clauses can be added to or removed from a formula without changing its truth value~\cite{BiereEtAl2011}.
+\end{description}
+
+\section{The QDIMACS Format}\label{sec:qdimacs}
+
+QBF instances are commonly exchanged in the \emph{QDIMACS} format~\cite{QDIMACS}, the standard input format for QBF solvers. A QDIMACS file consists of four parts:
+
+\begin{enumerate}
+  \item \textbf{Comment lines} (optional): lines beginning with \texttt{c}.
+  \item \textbf{Header line}: \texttt{p cnf <num\_vars> <num\_clauses>}, declaring the total number of variables and clauses.
+  \item \textbf{Quantifier prefix}: one line per quantifier block, beginning with \texttt{a} (universal) or \texttt{e} (existential), followed by variable indices and terminated by \texttt{0}.
+  \item \textbf{Matrix}: one clause per line, as a space-separated list of signed integer literals terminated by \texttt{0}. A positive integer $i$ represents the positive literal of variable $i$; a negative integer $-i$ represents its negation.
+\end{enumerate}
+
+Listing~\ref{lst:qdimacs-example} shows a minimal QDIMACS file encoding the formula $\forall x_1\; \exists x_2\, x_3 \colon (x_1 \lor x_2) \land (\lnot x_2 \lor x_3)$.
+
+\begin{listing}[H]
+\caption{A minimal QDIMACS example.}
+\label{lst:qdimacs-example}
+\begin{minted}[frame=single,fontsize=\small,breaklines]{text}
+c Example formula
+p cnf 3 2
+a 1 0
+e 2 3 0
+1 2 0
+-2 3 0
+\end{minted}
+\end{listing}
+
+The \texttt{QDIMACSParser} implemented in this project reads such files line by line, validates the header, separates the prefix from the matrix, and constructs a \texttt{QBFFormula} object. The parser raises a \texttt{ParseError} with file name and line number on any format violation.
+
+\section{QBF Solvers}\label{sec:solvers}
+
+\subsection{DepQBF}\label{subsec:depqbf}
+
+DepQBF~\cite{LonsingBiere2010} is a search-based QBF solver written in C. It extends the DPLL procedure to QBF by maintaining a \emph{dependency scheme} that tracks which existential variables depend on which universal variables. This dependency information allows DepQBF to apply universal reduction more aggressively than a naive left-to-right quantifier order would permit. DepQBF serves as the primary solver in this thesis because its C source code is instrumented with \texttt{gcov} flags, enabling fine-grained code coverage measurement.
+
+\subsection{CAQE}\label{subsec:caqe}
+
+CAQE~\cite{RabeTentrup2015} is a certifying QBF solver written in Rust. It is based on a \emph{clausal abstraction} algorithm that iteratively refines an abstraction of the formula by solving a sequence of SAT sub-problems. Unlike DepQBF, CAQE produces a certificate of its result (a strategy for the winning player). CAQE is used as a second, independent solver to verify that observed runtime differences are not artifacts of a single solver's implementation.
+
+Both solvers follow the QDIMACS exit code convention: exit code \texttt{10} indicates the formula is true (satisfiable from the existential player's perspective), exit code \texttt{20} indicates false (unsatisfiable).
+
+\section{Code Coverage with gcov}\label{sec:gcov}
+
+\texttt{gcov} is a code coverage tool distributed with GCC. It operates in two phases. First, the target program (here: DepQBF) is compiled with the flags \texttt{-fprofile-arcs -ftest-coverage}. 
+This instrumentation step produces \texttt{.gcno} files containing the static control-flow structure of the compiled code. 
+Second, each execution of the instrumented binary writes \texttt{.gcda} files recording how many times each basic block was executed. 
+Invoking \texttt{gcov -b -c} on the source files then combines 
+\texttt{.gcno} and \texttt{.gcda} to produce a human-readable 
+report of the form:
+
+\begin{minted}[frame=single,fontsize=\small]{text}
+Lines executed: 40.32% of 3521
+Branches executed: 35.18% of 8742
+\end{minted}
+
+Two metrics are collected per experiment:
+
+\begin{description}
+  \item[Line coverage.] The percentage of source lines executed at least once. A line corresponds to one or more machine instructions.
+  \item[Branch coverage.] The percentage of conditional branches (e.g.\ \texttt{if}/\texttt{else}, loop conditions) that were taken at least once in each direction. Branch coverage is strictly finer than line coverage: a line with an \texttt{if} statement contributes two branches.
+\end{description}
+
+In the experimental pipeline, coverage counters are reset before each solver run by deleting all \texttt{.gcda} files. After the run, \texttt{gcov} is invoked and its output is parsed by the \texttt{CoverageAnalyzer} class. The \emph{coverage delta} $\Delta$ between a mutant and its original is then defined as:
+\[
+  \Delta_{\text{line}} = \text{line\_coverage}(\text{mutant}) - \text{line\_coverage}(\text{original})
+\]
+and analogously for branch coverage. A positive delta indicates that the transformed formula caused the solver to execute additional code paths.
+
+\section{Truth-Value-Preserving Transformations}\label{sec:tvp}
+
+A transformation $T$ applied to a QBF formula $\varphi$ is called \emph{truth-value-preserving} if
+\[
+  \varphi \text{ is true} \iff T(\varphi) \text{ is true.}
+\]
+The transformed formula $T(\varphi)$ is referred to as a \emph{mutant}. Truth-value-preserving transformations are useful for testing because the correct output of the solver on the mutant is known by construction: it must equal the output on the original. Any deviation is a definite solver error. At the same time, because the structure of the formula changes, the solver may follow entirely different internal code paths, potentially exercising functionality that the original formula does not reach. This combination of correctness oracle and structural diversity is what makes truth-value-preserving transformations an effective systematic testing methodology for QBF solvers.
+
+%%% Local Variables:
+%%% tex-command: "pdflatex"
+%%% TeX-master: "../main"
+%%% TeX-command-extra-options: "-shell-escape"
+%%% End:

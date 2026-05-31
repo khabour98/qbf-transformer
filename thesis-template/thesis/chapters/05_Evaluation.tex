@@ -1,0 +1,371 @@
+\chapter{Evaluation}\label{cha:evaluation}
+
+This chapter presents the experimental results of the QBF Transformer tool. 
+Section~\ref{sec:setup} describes the experimental setup, and Section~\ref{sec:equivalence-verification} verifies the correctness of the transformations via the equivalence rate. Sections~\ref{sec:runtime}--\ref{sec:secondary} present the measurements for runtime, coverage, and the relationship between coverage change and runtime effect. Section~\ref{sec:eval-summary} summarises all results in a single table.
+
+\section{Experimental Setup}\label{sec:setup}
+
+\subsection{Benchmark Formulas}\label{sec:benchmarks}
+
+The experiments were conducted on a set of 50 QBF benchmark formulas in
+QDIMACS format, drawn from the QBFLIB repository (Basler, Castellini,
+Jordan-Kaiser, Kronegger-Pfandler-Pichler, Tacchella, Tentrup, and
+Wintersteiger benchmark families).
+Formulas were selected using the \texttt{filter\_benchmarks.py} utility,
+retaining only instances that satisfy all of the following criteria:
+\begin{itemize}
+  \item at most 200 variables,
+  \item at most 1\,000 clauses,
+  \item at least two quantifier prefix blocks, and
+  \item at least one universal and at least one existential quantifier block
+        (formulas with only a single quantifier type are excluded as trivial).
+\end{itemize}
+ 
+A total of 400 experiments were recorded across all operator and formula
+combinations (50 formulas $\times$ 8 operators).
+After filtering for operator applicability, 285 experiments were retained
+for analysis.
+The equivalence rate and the reasons for exclusion are discussed in
+Section~\ref{sec:equivalence-verification}.
+
+
+\subsection{Operators and Variants}\label{sec:operators}
+
+Eight operator variants were evaluated, grouped into four families:
+ 
+\begin{itemize}
+  \item \textbf{Tautology Insertion} (1 variant):
+        \texttt{tautology\_insertion}
+  \item \textbf{Pure Literal Generator} (3 variants, differing in
+        which polarity of pure literal is selected):
+        \texttt{pure\_literal\_gen\_auto} (any polarity),
+        \texttt{pure\_literal\_gen\_pos} (positive only),
+        \texttt{pure\_literal\_gen\_neg} (negative only)
+  \item \textbf{Universal Reduction Trigger} (1 variant):
+        \texttt{universal\_reduction\_trigger}
+  \item \textbf{Blocked Clause Insertion} (3 variants, differing in the blocking-literal selection):
+        \texttt{\seqsplit{blocked\_clause\_insertion}} (first existential, positive),
+        \texttt{blocked\_clause\_insertion\_neg} (first existential, negated),
+        \texttt{blocked\_clause\_insertion\_v1} (second existential)
+\end{itemize}
+
+\subsection{Measurement Parameters}\label{sec:measurement}
+
+Each formula was solved once per solver per experiment. As the focus of this 
+thesis is correctness verification and coverage analysis rather than fine-grained 
+performance benchmarking, a single run is adequate to capture operator-specific 
+effects. A per-experiment timeout of 60 seconds was applied. 
+Runtime was measured with \texttt{time.perf\_counter}; code coverage was
+collected via \texttt{gcov} on an instrumented build of DepQBF compiled
+with \texttt{gcc-15}.
+
+
+\subsection{Equivalence Verification}\label{sec:equivalence-verification}
+
+Before analysing runtime and coverage, the correctness of each transformation
+must be verified.
+An experiment is marked as \emph{equivalent} if and only if DepQBF returns
+the same result (SAT or UNSAT) for both the original and the mutant
+formula (see Section~\ref{sec:equivalence-verification-impl}).
+CAQE results were additionally recorded and showed no discrepancies when
+inspected post-hoc, but are not used as part of the formal equivalence flag.
+
+Of 400 total experiments, 285 (71.25\%) produced valid results and were
+retained for runtime and coverage analysis.
+The remaining 115 experiments were excluded for two reasons:
+
+
+\begin{itemize}
+  \item \textbf{Operator non-applicability} (99 experiments): the Pure
+        Literal Generator variants could not be applied to formulas
+        that contained no pure literals.
+  \item \textbf{Parse errors} (16 experiments): two benchmark files
+        (\texttt{p10-1.pddl\_planlen=0} and
+        \texttt{p5-5.pddl\_planlen=0}) contained an empty quantifier
+        block (\texttt{e~0}), which is non-standard QDIMACS and caused
+        a parse error in the tool
+        ($2~\text{files} \times 8~\text{operators} = 16~\text{experiments}$).
+\end{itemize}
+
+Crucially, all 285 retained experiments achieved a 100\% equivalence rate:
+DepQBF returned identical results (SAT or UNSAT) for every
+original--mutant pair, confirming that all four transformation operators
+are correctly implemented and truth-value-preserving in practice.
+
+Figure~\ref{fig:equivalence} shows the equivalence rate per operator.
+Operators for which all experiments were retained (Tautology Insertion,
+Universal Reduction Trigger, and all Blocked Clause variants) show a bar
+at 100\% with $n = 48$.
+The Pure Literal Generator variants show lower $n$ values (19, 13, 13)
+reflecting the cases where the operator was not applicable.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{images/equivalence_rate.png}
+  \caption{%
+    Equivalence rate per transformation operator.
+    The dashed green line marks the 100\% target.
+    Bar labels show the equivalence rate and sample count~$n$.
+    Operators with $n < 48$ were not applicable to all benchmark
+    formulas (see text).%
+  }
+  \label{fig:equivalence}
+\end{figure}
+
+\section{Runtime Analysis}\label{sec:runtime}
+
+The runtime effect of a transformation is quantified by the runtime ratio:
+\[
+  \text{ratio} = \frac{\text{median\_time}(\text{mutant})}{\text{median\_time}(\text{original})}.
+\]
+A ratio of $1.0$ indicates no change; values above $1.0$ indicate the mutant is slower; values below $1.0$ indicate the mutant is faster.
+
+\subsection{Runtime Ratio per Operator — DepQBF}
+
+Figure~\ref{fig:ratio-depqbf} shows the distribution of runtime ratios for DepQBF across all operators.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{images/time_ratio_boxplot_depqbf.png}
+  \caption{Runtime ratio (mutant / original) per operator for DepQBF. The dashed red line marks ratio~$= 1.0$.}
+  \label{fig:ratio-depqbf}
+\end{figure}
+
+\subsection{Runtime Ratio per Operator — CAQE}
+
+Figure~\ref{fig:ratio-caqe} shows the same distribution for CAQE.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{images/time_ratio_boxplot_caqe.png}
+  \caption{Runtime ratio (mutant / original) per operator for CAQE. The dashed red line marks ratio~$= 1.0$.}
+  \label{fig:ratio-caqe}
+\end{figure}
+
+\subsection{Solver Comparison: DepQBF vs.\ CAQE}
+
+Figure~\ref{fig:solver-comparison} directly compares the median runtime ratio of DepQBF and CAQE for each operator. Operators where both bars are on the same side of $1.0$ suggest a general structural effect; operators where the bars diverge suggest a solver-specific implementation effect.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{images/solver_comparison.png}
+  \caption{Median runtime ratio comparison between DepQBF and CAQE per operator.}
+  \label{fig:solver-comparison}
+\end{figure}
+
+\subsection{Interpretation}
+
+The Tautology Insertion operator produces a median runtime ratio of 
+$0.990$ for DepQBF and $0.999$ for CAQE, both close to~$1.0$. The values 
+fall just below~$1.0$, consistent with measurement noise at this scale, 
+and confirm that adding a trivially discarded clause causes only minimal overhead.
+The Pure Literal Generator variants consistently show ratios below $1.0$ for DepQBF 
+(auto: $0.968$, positive: $0.976$, negative: $0.980$), consistent with the prediction 
+that eliminating clauses reduces the formula size and accelerates DepQBF. 
+For CAQE the corresponding ratios are essentially at $1.0$ (auto: $1.002$, 
+positive: $1.003$, negative: $0.999$), suggesting that the size reduction has 
+a much weaker effect on CAQE's clausal-abstraction strategy than on DepQBF's 
+search-based procedure. The Universal Reduction Trigger shows a small but 
+notable solver asymmetry: $0.988$ for DepQBF (mutant slightly faster) 
+versus $1.005$ for CAQE (mutant slightly slower), suggesting that 
+DepQBF benefits marginally from the inserted clause being simplified 
+away during preprocessing, while CAQE incurs a small overhead from 
+the additional clause. The Blocked Clause Insertion variants show 
+ratios slightly below $1.0$ for DepQBF ($0.988$--$0.992$), and ratios 
+slightly above $1.0$ for CAQE ($1.002$--$1.005$), consistent with 
+the same solver asymmetry and the formula-structure dependence of 
+blocked clause detection.
+
+\section{Coverage Analysis}\label{sec:coverage}
+
+Code coverage is measured as the percentage of DepQBF source lines and branches
+executed during solving. The coverage delta~$\Delta$ is defined as:
+\[
+  \Delta = \text{coverage}(\text{mutant}) - \text{coverage}(\text{original}).
+\]
+A positive delta indicates that the mutant formula caused the solver to execute
+additional code; a negative delta indicates that fewer code paths were reached.
+Coverage was collected only for DepQBF, as \texttt{gcov} instrumentation is not
+available for the CAQE binary.
+
+\subsection{Line Coverage Delta}
+
+Figure~\ref{fig:coverage-line} shows the median line coverage delta per operator.
+Error bars represent the interquartile range~(IQR) across all experiments in that
+operator group.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{images/coverage_delta_line.png}
+  \caption{%
+    Line coverage delta ($\Delta$ line coverage in percentage points,~pp) per
+    operator. Bars show the median; error bars show the interquartile range~(IQR).
+    Positive values indicate the mutant activates additional source lines in DepQBF.%
+    }
+  \label{fig:coverage-line}
+\end{figure}
+
+\subsection{Branch Coverage Delta}
+
+Figure~\ref{fig:coverage-branch} shows the median branch coverage delta per operator.
+Branch coverage is strictly finer than line coverage: a single \texttt{if}-statement
+contributes two branches, so branch deltas tend to be slightly larger in magnitude
+than the corresponding line deltas.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{images/coverage_delta_branch.png}
+  \caption{%
+    Branch coverage delta ($\Delta$ branch coverage in percentage points,~pp) per
+    operator. Bars show the median; error bars show the interquartile range~(IQR).
+    Positive values indicate the mutant causes additional conditional branches to be
+    taken in DepQBF.%
+     }
+  \label{fig:coverage-branch}
+\end{figure}
+
+\subsection{Interpretation}\label{sec:coverage-interpretation}
+
+\textbf{Tautology Insertion} produces a median line coverage delta of
+$+0.033\,\text{pp}$ and a branch delta of $+0.030\,\text{pp}$.
+Both values are positive, indicating that the inserted tautological clause
+$(\ell \lor \neg\ell)$ triggers an additional preprocessing code path in DepQBF
+that is not reached by the original formula.
+ 
+\textbf{Pure Literal Generator} (all three variants: auto, positive, negative)
+consistently produce negative deltas of $-0.017\,\text{pp}$ (line) and
+$-0.030\,\text{pp}$ (branch).
+This is consistent with the design intent of this operator: by applying Pure Literal
+Elimination to produce a strictly smaller mutant, the transformed formula traverses
+fewer solver-internal code paths than the original. All three variants produce
+identical coverage deltas because they share the same elimination mechanism and
+differ only in which pure literal is selected.
+
+\textbf{Universal Reduction Trigger} produces a median line delta of
+$+0.033\,\text{pp}$ and branch delta of $+0.030\,\text{pp}$, identical to
+Tautology Insertion.
+This suggests that the inserted clause $[u, e, \neg e]$ activates the same
+preprocessing code path as the tautological clause — consistent with the
+expectation that Universal Reduction is applied during the same preprocessing
+phase as tautology detection.
+ 
+\textbf{Blocked Clause Insertion} (Standard variant) produces a median line
+delta of $+0.017\,\text{pp}$ and branch delta of $+0.015\,\text{pp}$,
+approximately half the delta of Tautology Insertion. This suggests partial
+activation of the blocked clause detection code path.
+ 
+\textbf{Blocked Clause (Negated)} produces the largest positive delta of all
+operators: $+0.075\,\text{pp}$ line and $+0.091\,\text{pp}$ branch. The larger
+delta compared to the standard variant suggests that negating the blocking literal
+activates a different, less frequently reached branch within the blocked clause
+detection routine of DepQBF.
+ 
+\textbf{Blocked Clause (Variant~2)} produces a delta of exactly $0\,\text{pp}$
+for both line and branch coverage. The inserted clause is handled by an
+already-covered code path, meaning no new lines or branches are reached by the mutant.
+
+It is noteworthy that the Blocked Clause (Negated) and Blocked Clause (Standard)
+variants exhibit large IQR error bars (approximately $\pm 0.5\,\text{pp}$),
+reflecting high variability across benchmark formulas. This variability is
+formula-structure-dependent: blocked clause detection is only triggered when the
+inserted clause is blocked with respect to the formula's existing clause set,
+which varies per instance.
+
+\section{Secondary Analysis: Coverage Change vs.\ Runtime Effect}\label{sec:secondary}
+
+This section investigates whether a larger coverage delta is associated with a larger runtime ratio. Figures~\ref{fig:cov-vs-ratio-depqbf} and~\ref{fig:cov-vs-ratio-caqe} provide an overview across both solvers: each point represents one experiment, with the coverage delta on the $x$-axis and the runtime ratio on the $y$-axis. Points are colour-coded by operator family.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{images/scatter_depqbf.png}
+  \caption{Coverage delta (pp) vs.\ runtime ratio for DepQBF. The dashed red line marks ratio $= 1.0$.}
+  \label{fig:cov-vs-ratio-depqbf}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{images/scatter_caqe.png}
+  \caption{Coverage delta (pp) vs.\ runtime ratio for CAQE. The dashed red line marks ratio $= 1.0$.}
+  \label{fig:cov-vs-ratio-caqe}
+\end{figure}
+
+Figure~\ref{fig:coverage-vs-ratio} then breaks the DepQBF data down by operator family, with a linear trend line with slope $m$ fitted per group.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{images/coverage_vs_ratio_depqbf.png}
+  \caption{Coverage delta (pp) vs.\ runtime ratio for DepQBF, grouped by operator family. The dashed coloured line shows a linear fit with slope $m$; the dotted red line marks ratio $= 1.0$.}
+  \label{fig:coverage-vs-ratio}
+\end{figure}
+
+For three of the four operator groups the fitted slope is close to zero
+($|m| \leq 0.074$), indicating no meaningful linear relationship between
+coverage delta and runtime ratio.
+The exception is \textbf{Tautology Insertion} ($m = -0.472$): a larger
+positive coverage delta is weakly associated with a \emph{lower} runtime
+ratio, suggesting that reaching additional preprocessing code paths
+slightly reduces solving time rather than increasing it.
+However, the Tautology Insertion group spans a narrow coverage range
+(approximately $-0.01$ to $+0.03\,\text{pp}$) with few distinct delta
+values, so this slope should not be over-interpreted.
+
+The \textbf{Blocked Clause Addition} group exhibits the widest spread on
+both axes: coverage deltas range from approximately $-1\,\text{pp}$ to
+$+3\,\text{pp}$, and runtime ratios range from roughly $0.75$ to $1.25$.
+Despite this spread, the slope is nearly flat ($m = 0.003$), confirming
+that coverage delta is not a predictor of runtime change within this group.
+The large variance is consistent with the formula-structure dependence of
+blocked clause detection noted in Section~\ref{sec:coverage-interpretation}.
+
+Overall, the analysis provides no evidence that a larger coverage delta
+causes a larger runtime effect across any operator group.
+
+\section{Summary}\label{sec:eval-summary}
+
+\begin{table}[h]
+\centering
+\caption{Aggregated results per transformation operator (n = number of valid experiments; ratios and coverage deltas are medians across formulas).}
+\label{tab:summary}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llrrrrr}
+\toprule
+\textbf{Operator} & \textbf{Group} & \textbf{n} &
+\textbf{Ratio DepQBF} & \textbf{Ratio CAQE} &
+\textbf{$\Delta$ Line (pp)} & \textbf{$\Delta$ Branch (pp)} \\
+\midrule
+\texttt{tautology\_insertion}            & Tautology           & 48 & $0.990$ & $0.999$ & $+0.033$ & $+0.030$ \\
+\texttt{pure\_literal\_gen\_auto}        & Pure Literal        & 19 & $0.968$ & $1.002$ & $-0.017$ & $-0.030$ \\
+\texttt{pure\_literal\_gen\_pos}         & Pure Literal        & 13 & $0.976$ & $1.003$ & $-0.017$ & $-0.030$ \\
+\texttt{pure\_literal\_gen\_neg}         & Pure Literal        & 13 & $0.980$ & $0.999$ & $-0.017$ & $-0.030$ \\
+\texttt{universal\_reduction\_trigger}   & Universal Reduction & 48 & $0.988$ & $1.005$ & $+0.033$ & $+0.030$ \\
+\texttt{blocked\_clause\_insertion}      & Blocked Clause      & 48 & $0.988$ & $1.005$ & $+0.017$ & $+0.015$ \\
+\texttt{blocked\_clause\_insertion\_neg} & Blocked Clause      & 48 & $0.992$ & $1.002$ & $+0.075$ & $+0.091$ \\
+\texttt{blocked\_clause\_insertion\_v1}  & Blocked Clause      & 48 & $0.989$ & $1.004$ & $+0.000$ & $+0.000$ \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+All DepQBF runtime ratios fall within the range $0.968$--$0.992$, confirming
+that none of the transformations causes measurable overhead for DepQBF\@.
+The Pure Literal Generator variants produce the lowest DepQBF ratios
+($0.968$--$0.980$), consistent with the expectation that a smaller mutant
+formula reduces solving time.
+
+For CAQE, the picture is reversed for several operators: Universal Reduction,
+Blocked Clause (Standard), and Blocked Clause (Variant~2) all show CAQE ratios
+slightly above $1.0$ ($1.004$--$1.005$), meaning the mutant is marginally
+\emph{slower} for CAQE\@. This solver-specific asymmetry suggests that the two
+solvers handle the inserted clauses differently during preprocessing: DepQBF
+appears to simplify them away at a net benefit, while CAQE incurs a small
+overhead.
+
+Coverage deltas remain small across all operators (below $0.10\,\text{pp}$
+in all cases), reflecting the limited size of the benchmark formulas.
+The Blocked Clause (Negated) variant produces the largest positive delta
+($+0.075\,\text{pp}$ line, $+0.091\,\text{pp}$ branch), suggesting that
+negating the blocking literal activates additional preprocessing code paths
+in DepQBF\@. The Pure Literal Generator variants consistently produce negative
+deltas ($-0.017\,\text{pp}$ line, $-0.030\,\text{pp}$ branch); the three
+variants yield identical deltas because they share the same elimination
+mechanism and differ only in which pure literal is selected. A smaller
+mutant formula causes the solver to traverse fewer code paths overall.
