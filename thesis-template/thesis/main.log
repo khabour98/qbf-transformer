@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.5.13)  18 MAY 2026 03:24
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.5.13)  24 JUN 2026 22:31
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**/Users/mkhabour/Desktop/QBNF/qbf_transformer/thesis-template/thesis/main
-(/Users/mkhabour/Desktop/QBNF/qbf_transformer/thesis-template/thesis/main.tex
+**/Users/mkhabour/Desktop/QBNF/qbf_transformer/thesis-template/thesis/MAIN
+(/Users/mkhabour/Desktop/QBNF/qbf_transformer/thesis-template/thesis/MAIN.tex
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
 (/usr/local/texlive/2025/texmf-dist/tex/latex/koma-script/scrbook.cls
@@ -173,9 +173,9 @@ Package: inputenc 2024/02/08 v1.3d Input encoding file
 \inpenc@posthook=\toks19
 ) (./config.tex
 
-LaTeX Warning: Writing or overwriting file `main.xmpdata'.
+LaTeX Warning: Writing or overwriting file `MAIN.xmpdata'.
 
-\openout15 = `main.xmpdata'.
+\openout15 = `MAIN.xmpdata'.
 
 
 ) (/usr/local/texlive/2025/texmf-dist/tex/latex/pdfpages/pdfpages.sty
@@ -1629,8 +1629,8 @@ Package: colorprofiles 2018/11/01 v1.0.1 color profiles for PDF/X and PDF/A supp
  (/usr/local/texlive/2025/texmf-dist/tex/generic/colorprofiles/colorprofiles.tex)) (/usr/local/texlive/2025/texmf-dist/tex/latex/pdfx/AdobeColorProfiles.tex) (/usr/local/texlive/2025/texmf-dist/tex/latex/pdfx/8bit.def
 File: 8bit.def 2008/03/30 v1.1d Input encoding file
 )
-** pdfx: Metadata file main.xmpdata read successfully.
-(./main.xmpdata)<<sRGB.icc>> (/usr/local/texlive/2025/texmf-dist/tex/latex/pdfx/8bit.def
+** pdfx: Metadata file MAIN.xmpdata read successfully.
+(./MAIN.xmpdata)<<sRGB.icc>> (/usr/local/texlive/2025/texmf-dist/tex/latex/pdfx/8bit.def
 File: 8bit.def 2008/03/30 v1.1d Input encoding file
 ) (/usr/local/texlive/2025/texmf-dist/tex/latex/pdfx/8bit.def
 File: 8bit.def 2008/03/30 v1.1d Input encoding file
@@ -2725,8 +2725,8 @@ Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... found 'babel' package.
 Package csquotes Info: Adjusting default style.
 Package csquotes Info: Redefining alias 'default' -> 'english'.
- (./main.aux (./cover/coversheet.aux))
-\openout1 = `main.aux'.
+ (./MAIN.aux (./cover/coversheet.aux))
+\openout1 = `MAIN.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 237.
 LaTeX Font Info:    ... okay on input line 237.
@@ -2862,17 +2862,17 @@ File: german.lbx 2024/03/21 v3.20 biblatex localization (PK/MW)
 Package biblatex Info: Input encoding 'utf8' detected.
 Package biblatex Info: Automatic encoding selection.
 (biblatex)             Assuming data encoding 'utf8'.
-\openout3 = `main.bcf'.
+\openout3 = `MAIN.bcf'.
 
 Package biblatex Info: Trying to load bibliographic data...
-Package biblatex Info: ... file 'main.bbl' found.
- (./main.bbl)
+Package biblatex Info: ... file 'MAIN.bbl' found.
+ (./MAIN.bbl)
 Package biblatex Info: Reference section=0 on input line 237.
 Package biblatex Info: Reference segment=0 on input line 237.
 Package hyperref Info: Link coloring OFF on input line 237.
- (./main.out) (./main.out)
+ (./MAIN.out) (./MAIN.out)
 \@outlinefile=\write7
-\openout7 = `main.out'.
+\openout7 = `MAIN.out'.
 
 Class scrbook Info: loading recommended package `bookmark'.
 (scrbook)           Using `bookmark' together with `hyperref' is recommended,
@@ -3032,11 +3032,11 @@ LaTeX Font Info:    Font shape `T1/XCharter-TLF/m/sc' will be
 Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/XCharter-TLF/m/sc/20.74'.
 (microtype)             Ignoring protrusion settings for this character.
-<images/signature.png, id=29, 239.294pt x 65.846pt>
+<images/signature.png, id=29, 269.005pt x 80.3pt>
 File: images/signature.png Graphic file (type png)
 <use images/signature.png>
 Package pdftex.def Info: images/signature.png  used on input line 19.
-(pdftex.def)             Requested size: 184.9429pt x 50.89244pt.
+(pdftex.def)             Requested size: 184.9429pt x 55.20732pt.
 
 
 LaTeX Font Info:    Font shape `OT1/mdbch/m/n' will be
@@ -3101,7 +3101,7 @@ Package pdftex.def Info: cover/jkuen.png  used on input line 251.
 
 ]
 Package tocbasic Info: character protrusion at toc deactivated on input line 251.
- (./main.toc
+ (./MAIN.toc
 LaTeX Font Info:    Font shape `OT1/mdbch/m/n' will be
 (Font)              scaled to size 10.51207pt on input line 7.
 LaTeX Font Info:    Font shape `OML/mdbch/m/it' will be
@@ -3126,7 +3126,7 @@ Package pdftex.def Info: cover/jkuen.png  used on input line 40.
 
 ])
 \tf@toc=\write8
-\openout8 = `main.toc'.
+\openout8 = `MAIN.toc'.
 
 
 
@@ -3136,9 +3136,9 @@ Package pdftex.def Info: cover/jkuen.png  used on input line 252.
 (pdftex.def)             Requested size: 85.35826pt x 41.9339pt.
 [4]
 Package tocbasic Info: character protrusion at lof deactivated on input line 252.
- (./main.lof)
+ (./MAIN.lof)
 \tf@lof=\write9
-\openout9 = `main.lof'.
+\openout9 = `MAIN.lof'.
 
 
 
@@ -3150,9 +3150,9 @@ Package pdftex.def Info: cover/jkuen.png  used on input line 253.
 
 {/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/ly1/texnansi.enc}]
 Package tocbasic Info: character protrusion at lot deactivated on input line 253.
- (./main.lot)
+ (./MAIN.lot)
 \tf@lot=\write10
-\openout10 = `main.lot'.
+\openout10 = `MAIN.lot'.
 
 
 
@@ -3299,13 +3299,13 @@ Package pdftex.def Info: cover/jkuen.png  used on input line 44.
 (pdftex.def)             Requested size: 85.35826pt x 41.9339pt.
 [4]
 Package hyperref Info: bookmark level for unknown listing defaults to 0 on input line 51.
-\pydata@fh@_FAD58DE7366495DB4650CFEFAC2FCD61.data.minted=\write11
-\openout11 = `_FAD58DE7366495DB4650CFEFAC2FCD61.data.minted'.
+\pydata@fh@_186495F7DA296BF880DF3A22A492B378.data.minted=\write11
+\openout11 = `_186495F7DA296BF880DF3A22A492B378.data.minted'.
 
-runsystem(latexminted config  --timestamp 20260518032436 FAD58DE7366495DB4650CFEFAC2FCD61)...executed safely (allowed).
+runsystem(latexminted config  --timestamp 20260624223139 186495F7DA296BF880DF3A22A492B378)...executed safely (allowed).
 
- (./_FAD58DE7366495DB4650CFEFAC2FCD61.config.minted)
-runsystem(latexminted cleanconfig  --timestamp 20260518032436 FAD58DE7366495DB4650CFEFAC2FCD61)...executed safely (allowed).
+ (./_186495F7DA296BF880DF3A22A492B378.config.minted)
+runsystem(latexminted cleanconfig  --timestamp 20260624223139 186495F7DA296BF880DF3A22A492B378)...executed safely (allowed).
 
  (./_minted/friendly.style.minted) (./_minted/6BC7FA5825DD388B2DAB471D17B691C0.highlight.minted
 LaTeX Font Info:    Font shape `T1/cmtt/m/n' will be
@@ -3706,27 +3706,27 @@ Package pdftex.def Info: cover/jkuen.png  used on input line 276.
 
 ] 
 enddocument/afterlastpage (AED): lastpage setting LastPage.
-(./main.aux (./cover/coversheet.aux))
+(./MAIN.aux (./cover/coversheet.aux))
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2020/03/25>
  ***********
-Package rerunfilecheck Info: File `main.out' has not changed.
+Package rerunfilecheck Info: File `MAIN.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package logreq Info: Writing requests to 'main.run.xml'.
-\openout1 = `main.run.xml'.
+Package logreq Info: Writing requests to 'MAIN.run.xml'.
+\openout1 = `MAIN.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
  60248 strings out of 473190
  1284682 string characters out of 5715800
- 2427505 words of memory out of 5000000
+ 2427506 words of memory out of 5000000
  81828 multiletter control sequences out of 15000+600000
  743895 words of font info for 390 fonts, out of 8000000 for 9000
  1143 hyphenation exceptions out of 8191
  107i,24n,135p,11014b,4695s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/xcharter/XCharter-Bold.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/xcharter/XCharter-Italic.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/xcharter/XCharter-Roman.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/bitstrea/charter/bchr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/bitstrea/charter/bchri8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/mathdesign/mdbch/md-chr7m.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/mathdesign/mdbch/md-chr7v.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/mathdesign/mdbch/md-chr7y.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/mathdesign/mdbch/md-chri7m.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfss0800.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfss0900.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfss1000.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfss1095.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfss1440.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfsx1000.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfsx1095.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sftt1095.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/grotesq/ugqb8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb>
-Output written on main.pdf (43 pages, 2639725 bytes).
+Output written on MAIN.pdf (43 pages, 2655293 bytes).
 PDF statistics:
  872 PDF objects out of 1000 (max. 8388607)
  753 compressed objects within 8 object streams
